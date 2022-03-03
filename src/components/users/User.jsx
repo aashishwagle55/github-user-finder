@@ -2,14 +2,16 @@ import axios from 'axios';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
+import Repos from '../repos/Repos';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const User = ({ getUser, user, loading }) => {
+const User = ({ getUser, user, loading, repos, getUserRepos }) => {
   let username = useParams().login;
 
   useEffect(() => {
     getUser(username);
+    getUserRepos(username);
   }, [username]);
 
   const {
@@ -52,7 +54,7 @@ const User = ({ getUser, user, loading }) => {
             style={{ width: '150px' }}
           />
           <h1>{name}</h1>
-          <p>Location: {location}</p>
+          {location && <p>Location: {location}</p>}
         </div>
         <div>
           {bio && (
@@ -95,6 +97,7 @@ const User = ({ getUser, user, loading }) => {
         <div className='badge badge-light'>Public Repos: {public_repos}</div>
         <div className='badge badge-dark'>Public Gists: {public_gists}</div>
       </div>
+      <Repos repos={repos} />
     </Fragment>
   );
 };
@@ -103,6 +106,8 @@ User.propTypes = {
   getUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  getUserRepos: PropTypes.func.isRequired,
+  repos: PropTypes.array.isRequired,
 };
 
 export default User;

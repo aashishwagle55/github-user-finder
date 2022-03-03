@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
@@ -12,7 +11,8 @@ const User = ({ getUser, user, loading, repos, getUserRepos }) => {
   useEffect(() => {
     getUser(username);
     getUserRepos(username);
-  }, [username]);
+    // eslint-disable-nextline
+  }, []);
 
   const {
     name,
